@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { Link, Routes, Route } from "react-router-dom";
 import WebcamFeed from "./components/WebcamFeed";
 import SimpleGame from "./components/SimpleGame";
 import Dashboard from "./components/Dashboard";
 import Badges from "./components/Badges";
 import ComplianceRing from "./components/ComplianceRing";
+import ParentPortal from "./pages/ParentPortal";
 
-export default function App() {
+function HomePage() {
   const [patchDetected, setPatchDetected] = useState(false);
   const [sessionTime, setSessionTime] = useState(() => {
     const savedTime = localStorage.getItem("sessionTime");
@@ -31,28 +33,49 @@ export default function App() {
   }, [sessionTime]);
 
   return (
-    <div style={{ padding: "20px", textAlign: "center", maxWidth: "1100px", margin: "0 auto" }}>
-      <h1>Amblyopia Therapy App</h1>
-      <p>{patchDetected ? "Patch on: Game running" : "Patch off: Game paused"}</p>
-      <h2>Session Time: {sessionTime} sec</h2>
+    <div className="app-shell">
+      <div className="page-card">
+        <div className="topbar">
+          <h1 className="app-title">Amblyopia Therapy App</h1>
+          <Link to="/parent" className="nav-link">
+            Parent Portal
+          </Link>
+        </div>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "24px",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          flexWrap: "wrap",
-          marginTop: "20px",
-        }}
-      >
-        <WebcamFeed onPatchStatusChange={setPatchDetected} />
-        <SimpleGame isRunning={patchDetected} />
+        <div className={`status-banner ${patchDetected ? "status-on" : "status-off"}`}>
+          <div className="status-emoji">{patchDetected ? "🎉😄🩹" : "😴🙈"}</div>
+          <div>
+            <h2 className="status-title">
+              {patchDetected ? "Patch On! Let’s Play!" : "Patch Off. Game Paused"}
+            </h2>
+            <p className="status-text">
+              {patchDetected
+                ? "Awesome job wearing the patch. Keep going!"
+                : "Wear the patch to continue your game and therapy session."}
+            </p>
+          </div>
+        </div>
+
+        <div className="timer-pill">Session Time: {sessionTime} sec</div>
+
+        <div className="play-area">
+          <WebcamFeed onPatchStatusChange={setPatchDetected} />
+          <SimpleGame isRunning={patchDetected} />
+        </div>
+
+        <ComplianceRing currentSeconds={sessionTime} goalSeconds={1800} />
+        <Dashboard />
+        <Badges />
       </div>
-
-      <ComplianceRing currentSeconds={sessionTime} goalSeconds={1800} />
-      <Dashboard />
-      <Badges />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/parent" element={<ParentPortal />} />
+    </Routes>
   );
 }
