@@ -3,6 +3,7 @@ import WebcamFeed from "./components/WebcamFeed";
 import SimpleGame from "./components/SimpleGame";
 import Dashboard from "./components/Dashboard";
 import Badges from "./components/Badges";
+import ComplianceRing from "./components/ComplianceRing";
 
 export default function App() {
   const [patchDetected, setPatchDetected] = useState(false);
@@ -49,6 +50,7 @@ export default function App() {
         <SimpleGame isRunning={patchDetected} />
       </div>
 
+      <ComplianceRing currentSeconds={sessionTime} goalSeconds={1800} />
       <Dashboard />
       <Badges />
     </div>
