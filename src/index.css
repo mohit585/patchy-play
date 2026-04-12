@@ -10,10 +10,18 @@
   box-sizing: border-box;
 }
 
-body {
+html,
+body,
+#root {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  background: linear-gradient(180deg, #fff7ed 0%, #e0f2fe 50%, #fef3c7 100%);
+  color: #1e293b;
 }
 
 a {
@@ -27,8 +35,11 @@ select {
   font: inherit;
 }
 
-#root {
-  min-height: 100vh;
+img,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
 }
 
 .app-shell {
@@ -133,6 +144,207 @@ select {
   min-height: 420px;
 }
 
+.intro-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, #fde68a 0, transparent 30%),
+    radial-gradient(circle at bottom right, #93c5fd 0, transparent 30%),
+    linear-gradient(180deg, #fff7ed 0%, #eff6ff 100%);
+}
+
+.intro-card {
+  width: 100%;
+  max-width: 1100px;
+  padding: 32px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 4px solid #c4b5fd;
+  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.16);
+  text-align: center;
+}
+
+.intro-kicker {
+  margin: 0;
+  color: #7c3aed;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.intro-title {
+  margin: 10px 0 12px;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  color: #0f172a;
+}
+
+.intro-subtitle {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: #475569;
+}
+
+.vision-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.vision-panel {
+  padding: 20px;
+  border-radius: 24px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+}
+
+.vision-label {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.vision-label.weak {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.vision-label.treated {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.vision-scene {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #7dd3fc 0%, #dbeafe 55%, #bbf7d0 100%);
+}
+
+.weak-eye {
+  filter: blur(4px) saturate(0.7) contrast(0.82);
+}
+
+.treated-eye {
+  filter: none;
+}
+
+.scene-sun {
+  position: absolute;
+  top: 22px;
+  right: 28px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fde047;
+  box-shadow: 0 0 40px rgba(253, 224, 71, 0.7);
+}
+
+.scene-cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+}
+
+.cloud-one {
+  top: 34px;
+  left: 34px;
+  width: 90px;
+  height: 28px;
+}
+
+.cloud-two {
+  top: 74px;
+  left: 110px;
+  width: 110px;
+  height: 32px;
+}
+
+.scene-house {
+  position: absolute;
+  bottom: 52px;
+  left: 90px;
+  width: 90px;
+  height: 72px;
+  background: #fb7185;
+  border-radius: 10px;
+}
+
+.scene-house::before {
+  content: "";
+  position: absolute;
+  top: -32px;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-left: 53px solid transparent;
+  border-right: 53px solid transparent;
+  border-bottom: 38px solid #7c2d12;
+}
+
+.scene-tree {
+  position: absolute;
+  right: 84px;
+  bottom: 54px;
+  width: 26px;
+  height: 90px;
+  background: #92400e;
+  border-radius: 10px;
+}
+
+.scene-tree::before {
+  content: "";
+  position: absolute;
+  bottom: 42px;
+  left: -34px;
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.scene-ground {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: -10px;
+  height: 70px;
+  border-radius: 50% 50% 0 0;
+  background: #4ade80;
+}
+
+.vision-text {
+  margin: 16px 0 0;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.intro-note {
+  margin-top: 22px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.intro-button {
+  margin-top: 24px;
+  padding: 14px 22px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  color: white;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 @media (max-width: 900px) {
   .play-area {
     grid-template-columns: 1fr;
@@ -160,5 +372,17 @@ select {
 
   .topbar {
     justify-content: center;
+  }
+
+  .vision-compare {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-card {
+    padding: 20px;
+  }
+
+  .vision-scene {
+    height: 220px;
   }
 }

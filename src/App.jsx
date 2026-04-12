@@ -7,11 +7,15 @@ import Badges from "./components/Badges";
 import ComplianceRing from "./components/ComplianceRing";
 import Onboarding from "./components/Onboarding";
 import StoryMode from "./components/StoryMode";
+import IntroLanding from "./components/IntroLanding";
 import ParentPortal from "./pages/ParentPortal";
 
 function HomePage() {
   const savedProfile = JSON.parse(localStorage.getItem("childProfile") || "null");
+  const introSeen = localStorage.getItem("introSeen") === "true";
+
   const [profile, setProfile] = useState(savedProfile);
+  const [hasSeenIntro, setHasSeenIntro] = useState(introSeen);
   const [patchDetected, setPatchDetected] = useState(false);
   const [sessionTime, setSessionTime] = useState(() => {
     const savedTime = localStorage.getItem("sessionTime");
@@ -36,6 +40,15 @@ function HomePage() {
     localStorage.setItem("sessionTime", sessionTime);
   }, [sessionTime]);
 
+  function handleIntroContinue() {
+    localStorage.setItem("introSeen", "true");
+    setHasSeenIntro(true);
+  }
+
+  if (!hasSeenIntro) {
+    return <IntroLanding onContinue={handleIntroContinue} />;
+  }
+
   if (!profile?.onboardingComplete) {
     return <Onboarding onComplete={setProfile} />;
   }
@@ -44,7 +57,7 @@ function HomePage() {
     <div className="app-shell">
       <div className="page-card">
         <div className="topbar">
-          <h1 className="app-title">Amblyopia Therapy App</h1>
+          <h1 className="app-title">PatchyPlay</h1>
           <Link to="/parent" className="nav-link">
             Parent Portal
           </Link>
