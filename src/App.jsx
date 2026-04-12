@@ -6,6 +6,7 @@ import Dashboard from "./components/Dashboard";
 import Badges from "./components/Badges";
 import ComplianceRing from "./components/ComplianceRing";
 import Onboarding from "./components/Onboarding";
+import StoryMode from "./components/StoryMode";
 import ParentPortal from "./pages/ParentPortal";
 
 function HomePage() {
@@ -43,7 +44,7 @@ function HomePage() {
     <div className="app-shell">
       <div className="page-card">
         <div className="topbar">
-          <h1 className="app-title">PatchyPlay</h1>
+          <h1 className="app-title">Amblyopia Therapy App</h1>
           <Link to="/parent" className="nav-link">
             Parent Portal
           </Link>
@@ -62,6 +63,8 @@ function HomePage() {
         </div>
 
         <div className="timer-pill">Session Time: {sessionTime} sec</div>
+
+        <StoryMode childName={profile.name} patchDetected={patchDetected} />
 
         <div className="play-area">
           <WebcamFeed onPatchStatusChange={setPatchDetected} />
