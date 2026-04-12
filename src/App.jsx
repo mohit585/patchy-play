@@ -5,9 +5,12 @@ import SimpleGame from "./components/SimpleGame";
 import Dashboard from "./components/Dashboard";
 import Badges from "./components/Badges";
 import ComplianceRing from "./components/ComplianceRing";
+import Onboarding from "./components/Onboarding";
 import ParentPortal from "./pages/ParentPortal";
 
 function HomePage() {
+  const savedProfile = JSON.parse(localStorage.getItem("childProfile") || "null");
+  const [profile, setProfile] = useState(savedProfile);
   const [patchDetected, setPatchDetected] = useState(false);
   const [sessionTime, setSessionTime] = useState(() => {
     const savedTime = localStorage.getItem("sessionTime");
@@ -32,11 +35,15 @@ function HomePage() {
     localStorage.setItem("sessionTime", sessionTime);
   }, [sessionTime]);
 
+  if (!profile?.onboardingComplete) {
+    return <Onboarding onComplete={setProfile} />;
+  }
+
   return (
     <div className="app-shell">
       <div className="page-card">
         <div className="topbar">
-          <h1 className="app-title">Amblyopia Therapy App</h1>
+          <h1 className="app-title">PatchyPlay</h1>
           <Link to="/parent" className="nav-link">
             Parent Portal
           </Link>
@@ -46,12 +53,10 @@ function HomePage() {
           <div className="status-emoji">{patchDetected ? "🎉😄🩹" : "😴🙈"}</div>
           <div>
             <h2 className="status-title">
-              {patchDetected ? "Patch On! Let’s Play!" : "Patch Off. Game Paused"}
+              Hi {profile.name}! {patchDetected ? "Patch On! Let’s Play!" : "Patch Off. Game Paused"}
             </h2>
             <p className="status-text">
-              {patchDetected
-                ? "Awesome job wearing the patch. Keep going!"
-                : "Wear the patch to continue your game and therapy session."}
+              Therapy eye: {profile.eye} | Daily goal: {Math.floor(profile.dailyGoal / 60)} min
             </p>
           </div>
         </div>
@@ -63,7 +68,7 @@ function HomePage() {
           <SimpleGame isRunning={patchDetected} />
         </div>
 
-        <ComplianceRing currentSeconds={sessionTime} goalSeconds={1800} />
+        <ComplianceRing currentSeconds={sessionTime} goalSeconds={profile.dailyGoal} />
         <Dashboard />
         <Badges />
       </div>
