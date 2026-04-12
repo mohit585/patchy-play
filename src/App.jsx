@@ -67,8 +67,13 @@ function HomePage() {
         <StoryMode childName={profile.name} patchDetected={patchDetected} />
 
         <div className="play-area">
-          <WebcamFeed onPatchStatusChange={setPatchDetected} />
-          <SimpleGame isRunning={patchDetected} />
+          <div className="play-panel">
+            <WebcamFeed onPatchStatusChange={setPatchDetected} />
+          </div>
+
+          <div className="play-panel">
+            <SimpleGame isRunning={patchDetected} />
+          </div>
         </div>
 
         <ComplianceRing currentSeconds={sessionTime} goalSeconds={profile.dailyGoal} />
