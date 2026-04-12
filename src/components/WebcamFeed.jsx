@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FilesetResolver, FaceLandmarker } from "@mediapipe/tasks-vision";
 
-export default function WebcamFeed() {
+export default function WebcamFeed({ onPatchStatusChange }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const landmarkerRef = useRef(null);
@@ -79,7 +79,13 @@ export default function WebcamFeed() {
           );
 
           const diff = Math.abs(leftBrightness - rightBrightness);
-          setPatchDetected(diff > 40);
+          const detected = diff > 40;
+
+          setPatchDetected(detected);
+
+          if (onPatchStatusChange) {
+            onPatchStatusChange(detected);
+          }
         }
       }
 
@@ -110,7 +116,7 @@ export default function WebcamFeed() {
         cancelAnimationFrame(animationId);
       }
     };
-  }, []);
+  }, [onPatchStatusChange]);
 
   return (
     <div style={{ textAlign: "center" }}>

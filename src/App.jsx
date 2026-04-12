@@ -1,11 +1,14 @@
+import { useState } from "react";
 import WebcamFeed from "./components/WebcamFeed";
 import SimpleGame from "./components/SimpleGame";
 
 export default function App() {
+  const [patchDetected, setPatchDetected] = useState(false);
+
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
       <h1>Amblyopia Therapy App</h1>
-      <p>Step 6: Webcam patch check and simple game</p>
+      <p>{patchDetected ? "Patch on: Game running" : "Patch off: Game paused"}</p>
 
       <div
         style={{
@@ -17,8 +20,8 @@ export default function App() {
           marginTop: "20px",
         }}
       >
-        <WebcamFeed />
-        <SimpleGame />
+        <WebcamFeed onPatchStatusChange={setPatchDetected} />
+        <SimpleGame isRunning={patchDetected} />
       </div>
     </div>
   );

@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function SimpleGame() {
+export default function SimpleGame({ isRunning }) {
   const canvasRef = useRef(null);
   const [score, setScore] = useState(0);
   const targetRef = useRef({ x: 50, y: 50, size: 40 });
 
   useEffect(() => {
     let animationId;
+    let intervalId;
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
@@ -21,27 +23,38 @@ export default function SimpleGame() {
       ctx.fillStyle = "#f5f5f5";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#2563eb";
-      ctx.fillRect(
-        targetRef.current.x,
-        targetRef.current.y,
-        targetRef.current.size,
-        targetRef.current.size
-      );
+      if (isRunning) {
+        ctx.fillStyle = "#2563eb";
+        ctx.fillRect(
+          targetRef.current.x,
+          targetRef.current.y,
+          targetRef.current.size,
+          targetRef.current.size
+        );
+      } else {
+        ctx.fillStyle = "#999";
+        ctx.font = "24px Arial";
+        ctx.fillText("Game Paused", 170, 150);
+      }
 
       animationId = requestAnimationFrame(draw);
     }
 
-    const interval = setInterval(moveTarget, 1000);
+    if (isRunning) {
+      intervalId = setInterval(moveTarget, 1000);
+    }
+
     draw();
 
     return () => {
-      clearInterval(interval);
+      if (intervalId) clearInterval(intervalId);
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [isRunning]);
 
   function handleClick(event) {
+    if (!isRunning) return;
+
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
 
