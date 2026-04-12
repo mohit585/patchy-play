@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import WebcamFeed from "./components/WebcamFeed";
 import SimpleGame from "./components/SimpleGame";
+import Dashboard from "./components/Dashboard";
+import Badges from "./components/Badges";
 
 export default function App() {
   const [patchDetected, setPatchDetected] = useState(false);
-  const [sessionTime, setSessionTime] = useState(0);
+  const [sessionTime, setSessionTime] = useState(() => {
+    const savedTime = localStorage.getItem("sessionTime");
+    return savedTime ? Number(savedTime) : 0;
+  });
 
   useEffect(() => {
     let intervalId;
@@ -20,8 +25,12 @@ export default function App() {
     };
   }, [patchDetected]);
 
+  useEffect(() => {
+    localStorage.setItem("sessionTime", sessionTime);
+  }, [sessionTime]);
+
   return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
+    <div style={{ padding: "20px", textAlign: "center", maxWidth: "1100px", margin: "0 auto" }}>
       <h1>Amblyopia Therapy App</h1>
       <p>{patchDetected ? "Patch on: Game running" : "Patch off: Game paused"}</p>
       <h2>Session Time: {sessionTime} sec</h2>
@@ -39,6 +48,9 @@ export default function App() {
         <WebcamFeed onPatchStatusChange={setPatchDetected} />
         <SimpleGame isRunning={patchDetected} />
       </div>
+
+      <Dashboard />
+      <Badges />
     </div>
   );
 }
