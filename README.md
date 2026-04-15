@@ -1,10 +1,10 @@
-🚀 Hackathon Project
+# Hackathon Project
 
 This project is a therapy-based web application designed to support children suffering from amblyopia (lazy eye). Built during a hackathon, it focuses on making traditional vision therapy more engaging, interactive, and accessible through gamification.
 
 The application combines medical therapy concepts with modern web technologies to improve eye coordination, focus, and treatment compliance in a fun and user-friendly way.
 
-👨‍💻 Team:
+# Team:
 - Mohit Kumar
 - Anurag Yadav (https://github.com/YadavAnnurag)
 
